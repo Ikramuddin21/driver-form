@@ -5,6 +5,7 @@ import { useDriver } from "../context/DriverContextProvider";
 const DriverList = () => {
   const { driver, setDriver } = useDriver();
 
+  // handle calculate age
   const calculateAge = (birthDate) => {
     const today = new Date();
     const selectedBirthDate = new Date(birthDate);
@@ -13,11 +14,16 @@ const DriverList = () => {
     if (
       month < 0 ||
       (month === 0 && today.getDate() < selectedBirthDate.getDate())
-    ) {
+    )
       age--;
-    }
 
     return age;
+  };
+
+  // handle delete driver
+  const handleDeleteDriver = (id) => {
+    const remainDriver = driver.filter((item) => item.id !== id);
+    setDriver(remainDriver);
   };
   console.log("driver", driver);
 
@@ -48,7 +54,12 @@ const DriverList = () => {
                           Edit
                         </button>
                       </Link>
-                      <button className="!bg-red-700 text-white">Delete</button>
+                      <button
+                        onClick={() => handleDeleteDriver(item.id)}
+                        className="!bg-red-700 text-white"
+                      >
+                        Delete
+                      </button>
                     </div>
                   </td>
                 </tr>
